@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Decryption Tool</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 25% 25%, rgba(220, 38, 127, 0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(220, 38, 127, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .header {
+            background: transparent;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #dc2626;
+            text-shadow: 0 0 20px rgba(220, 38, 127, 0.5);
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+            min-height: 4rem;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            letter-spacing: 2px;
+        }
+
+        .typing-cursor {
+            animation: blink 1s infinite;
+            color: #dc2626;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .main-content {
+            padding: 3rem 2rem;
+        }
+
+        .info-section {
+            background: linear-gradient(135deg, rgba(220, 38, 127, 0.1), rgba(147, 51, 234, 0.1));
+            border: 1px solid rgba(220, 38, 127, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-content {
+            color: #c0c0c0;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .upload-container {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.6), rgba(31, 31, 51, 0.6));
+            border: 2px dashed rgba(220, 38, 127, 0.4);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(220, 38, 127, 0.1), transparent, rgba(147, 51, 234, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .upload-container:hover::before,
+        .upload-container.dragover::before {
+            opacity: 1;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .upload-container:hover,
+        .upload-container.dragover {
+            border-color: rgba(220, 38, 127, 0.8);
+            background: linear-gradient(135deg, rgba(220, 38, 127, 0.1), rgba(147, 51, 234, 0.1));
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(220, 38, 127, 0.2);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #dc2626;
+            filter: drop-shadow(0 4px 8px rgba(220, 38, 127, 0.3));
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-text {
+            font-size: 1.4rem;
+            color: #e0e0e0;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-subtext {
+            color: #9ca3af;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-info-card {
+            background: linear-gradient(135deg, rgba(31, 31, 51, 0.8), rgba(26, 26, 46, 0.8));
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(20px);
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .file-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #dc2626;
+            font-size: 1.2rem;
+        }
+
+        .file-size {
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+
+        .output-section {
+            background: linear-gradient(135deg, rgba(15, 15, 35, 0.9), rgba(26, 26, 46, 0.9));
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2.5rem;
+            backdrop-filter: blur(20px);
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        .output-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-output {
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+            color: #e0e0e0;
+            border: 1px solid rgba(220, 38, 127, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.5;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .code-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .code-output::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .code-output::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #dc2626, #9333ea);
+            border-radius: 4px;
+        }
+
+        .features {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, rgba(31, 31, 51, 0.6), rgba(26, 26, 46, 0.6));
+            border: 1px solid rgba(220, 38, 127, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(220, 38, 127, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .feature-box:hover::before {
+            left: 100%;
+        }
+
+        .feature-box:hover {
+            background: linear-gradient(135deg, rgba(220, 38, 127, 0.1), rgba(147, 51, 234, 0.1));
+            border-color: rgba(220, 38, 127, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(220, 38, 127, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #dc2626;
+            filter: drop-shadow(0 2px 4px rgba(220, 38, 127, 0.3));
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #e0e0e0;
+        }
+
+        .feature-desc {
+            color: #c0c0c0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                border-radius: 16px;
+            }
+            
+            .header {
+                padding: 2rem 1.5rem;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .upload-container {
+                padding: 3rem 1.5rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title" id="typingTitle">|</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="info-section">
+                <div class="info-title">🛡️ SourceDefender Online Decryption</div>
+                <div class="info-content">
+                    Created by VXNET | <a href="https://vxnet.onrender.com" style="color: green;">VXNET Main page</a> <br>
+                    Decrypt <a href="https://sourcedefender.co.uk" style="color: chartreuse;">SourceDefender</a> protected files in less than 1 second!
+                </div>
+            </div>
+
+            <div class="upload-container" id="uploadContainer">
+                <div class="upload-icon">🔓</div>
+                <div class="upload-text">Drop your encrypted file here</div>
+                <div class="upload-subtext">Supports .pye files • Instant decryption • 100% local processing</div>
+                <input type="file" id="fileInput" class="file-input" accept=".pye" />
+            </div>
+
+            <div class="file-info-card" id="fileInfoCard">
+                <div class="file-details">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                </div>
+            </div>
+
+            <div class="output-section" id="outputSection">
+                <div class="output-title">✨ Decrypted Source Code</div>
+                <div class="code-output" id="codeOutput"></div>
+            </div>
+
+            <div class="features">
+                <div class="feature-box">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Instant Processing</div>
+                    <div class="feature-desc">We used low level languages to make the site extremely fast!</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Complete Security</div>
+                    <div class="feature-desc">We are not storing any .pye files uploaded to our site (100% privacy)</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">💎</div>
+                    <div class="feature-title">Perfect Recovery</div>
+                    <div class="feature-desc">Decrypted source code is exactly as it was before obfuscation</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title">Some notes</div>
+                    <div class="feature-desc">As you can see our website is heavily obfuscated. We don't allow copying our source code and using it on other websites. Please don't do that.</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">💸</div>
+                    <div class="feature-title">Want to buy our website with full & clean source code?</div>
+                    <div class="feature-desc">Contact website owner. Please go to contact section on our main page <br> <a href="https://vxnet.onrender.com" style="color: green;">VXNET Main page</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Typing animation for title
+        const titleElement = document.getElementById('typingTitle');
+        const fullText = "SourceDefender Decryption";
+        let currentIndex = 0;
+
+        function typeText() {
+            if (currentIndex < fullText.length) {
+                titleElement.textContent = fullText.substring(0, currentIndex + 1) + '|';
+                currentIndex++;
+                setTimeout(typeText, 120); // 120ms per character
+            } else {
+                // Replace cursor with blinking cursor
+                titleElement.innerHTML = fullText + '<span class="typing-cursor">|</span>';
+            }
+        }
+
+        // Start typing animation after a short delay
+        setTimeout(typeText, 500);
+
+        const uploadContainer = document.getElementById('uploadContainer');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfoCard = document.getElementById('fileInfoCard');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const outputSection = document.getElementById('outputSection');
+        const codeOutput = document.getElementById('codeOutput');
+
+        uploadContainer.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        uploadContainer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadContainer.classList.add('dragover');
+        });
+
+        uploadContainer.addEventListener('dragleave', () => {
+            uploadContainer.classList.remove('dragover');
+        });
+
+        uploadContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadContainer.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.name.toLowerCase().endsWith('.pye')) {
+                alert('⚠️ Please select a .pye file only!');
+                return;
+            }
+
+            // Show file info
+            fileName.textContent = `🎯 ${file.name}`;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfoCard.style.display = 'block';
+            
+            // Instantly show decrypted code
+            showDecryptedCode(file);
+        }
+
+        function showDecryptedCode(file) {
+            outputSection.style.display = 'block';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const sourcedefender_bytes = new Uint8Array(e.target.result);
+
+                // Call your decryption function (make sure it's async)
+                decrypt_sourcedefender_file(file.name, sourcedefender_bytes)
+                    .then(result => {
+                        codeOutput.textContent = result;
+                    })
+                    .catch(err => {
+                        codeOutput.textContent = `❌ Error: ${err}`;
+                    });
+            };
+            reader.readAsArrayBuffer(file);
+
+            // Smooth scroll to output
+            setTimeout(() => {
+                outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        }
+
+        // Optional: If you want a separate "Decrypt" button instead of auto-decrypt on file select
+        document.getElementById("decrypt-pye")?.addEventListener("click", () => {
+            if (fileInput.files.length > 0) {
+                showDecryptedCode(fileInput.files[0]);
+            } else {
+                alert('⚠️ No file selected!');
+            }
+        });
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+    <script src="sdw.min.js"></script>
+</body>
+</html>
